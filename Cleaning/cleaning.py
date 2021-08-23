@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-
+import numpy as np
 
 def api_read(city_list,limit, key, url):
     frame = pd.DataFrame()
@@ -22,6 +22,15 @@ def api_read(city_list,limit, key, url):
             row['city'] = city
             frame=frame.append(row , ignore_index=True)
     return frame
+
+#code gotten from stackoverflow
+def recode_empty_cells(dataframe, list_of_columns):
+
+    for column in list_of_columns:
+      dataframe[column] = dataframe[column].replace(r'\s+', np.nan, regex=True)
+      dataframe[column] = dataframe[column].fillna(0)
+
+
 """
 df = api_read(cities,200,key,url)
 print(df)
